@@ -14,6 +14,7 @@ fi
 COOKIE=`http -hf POST "http://${ROUTER_IP}/login-login.cgi" sessionKey="${SESSION_KEY}" pass="" |grep -i set-cookie|cut -d":" -f2|cut -c'2-'|tr -d '\r'`
 DATA_TRAFFIC=`http GET "http://${ROUTER_IP}/statswan.cmd" Cookie:"${COOKIE}"`
 DATA_INFO=`http GET "http://${ROUTER_IP}/info.html" Cookie:"${COOKIE}"`
+http GET http://${ROUTER_IP}/logout.cmd Cookie:"${COOKIE}" > /dev/null 
 
 echo "${DATA_TRAFFIC}" | grep -A2 "${IFACE}" | tail -n1 | cut -d">" -f2 | cut -d"<" -f1
 echo "${DATA_TRAFFIC}" | grep -A10 "${IFACE}" | tail -n1 | cut -d">" -f2 | cut -d"<" -f1
